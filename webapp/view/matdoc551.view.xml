@@ -1,0 +1,145 @@
+<mvc:View
+controllerName="matdoc551.controller.matdoc551"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+        showHeader="true"
+    >
+        <content>
+            <smartFilterBar:SmartFilterBar
+                id="smartFilterBar"
+                entitySet="YY1_MAT_DOC_551"
+                persistencyKey="matdoc551_SFB"
+                showRestoreButton="true"
+                filterChange=".onFilterChange"
+                initialise=".onFilterBarInitialised"
+                enableBasicSearch="false"
+                useToolbar="true"
+                search=".onSearch"
+            >
+                <smartFilterBar:controlConfiguration>
+                    <smartFilterBar:ControlConfiguration
+                        id="ctrlConfigPlant"
+                        key="Plant"
+                        label="Plant"
+                        index="0"
+                        visibleInAdvancedArea="false"
+                    >
+                        <smartFilterBar:customControl>
+                            <MultiInput
+                                id="plantFilterInput"
+                                width="100%"
+                                showValueHelp="true"
+                                showSuggestion="false"
+                                maxTokens="1"
+                                valueHelpRequest=".onOpenPlantValueHelp"
+                                tokenUpdate=".onPlantTokenUpdate"
+                            />
+                        </smartFilterBar:customControl>
+                    </smartFilterBar:ControlConfiguration>
+
+                    <smartFilterBar:ControlConfiguration
+                        id="ctrlConfigMaterialDocument"
+                        key="MaterialDocument"
+                        label="Material Document"
+                        index="1"
+                        visibleInAdvancedArea="false"
+                        preventInitialDataFetchInValueHelpDialog="false"
+                    />
+
+                    <!-- From Date -->
+                    <smartFilterBar:ControlConfiguration
+                        id="ctrlConfigFromDate"
+                        key="FromDate"
+                        label="From Date"
+                        index="2"
+                        visibleInAdvancedArea="false"
+                        mandatory="mandatory">
+
+                        <smartFilterBar:customControl>
+
+                            <DatePicker
+                                id="fromDateFilter"
+                                width="16rem"
+                                valueFormat="yyyy-MM-dd"
+                                displayFormat="dd.MM.yyyy"
+                                change=".onDateFilterChange" />
+
+                        </smartFilterBar:customControl>
+
+                    </smartFilterBar:ControlConfiguration>
+
+
+                    <!-- To Date -->
+                    <smartFilterBar:ControlConfiguration
+                        id="ctrlConfigToDate"
+                        key="ToDate"
+                        label="To Date"
+                        index="3"
+                        visibleInAdvancedArea="false"
+                        mandatory="mandatory">
+
+                        <smartFilterBar:customControl>
+
+                            <DatePicker
+                                id="toDateFilter"
+                                width="16rem"
+                                valueFormat="yyyy-MM-dd"
+                                displayFormat="dd.MM.yyyy"
+                                change=".onDateFilterChange" />
+
+                        </smartFilterBar:customControl>
+
+                    </smartFilterBar:ControlConfiguration>
+                </smartFilterBar:controlConfiguration>
+            </smartFilterBar:SmartFilterBar>
+
+            <smartTable:SmartTable
+                id="smartTable"
+                entitySet="YY1_MAT_DOC_551"
+                smartFilterId="smartFilterBar"
+                tableType="ResponsiveTable"
+                enableAutoBinding="false"
+                enableExport="true"
+                useVariantManagement="false"
+                showVariantManagement="false"
+                useTablePersonalisation="true"
+                showFullScreenButton="true"
+                header="{i18n>tableHeader}"
+                showRowCount="true"
+                persistencyKey="matdoc551_ST"
+                initialise=".onSmartTableInitialised"
+                beforeRebindTable=".onBeforeRebindTable"
+                class="sapUiResponsiveContentPadding"
+                enableAutoColumnWidth="true"
+                growingThreshold="50"
+                initiallyVisibleFields="MaterialDocument,Material,ProductDescription,QuantityInBaseUnit,ScrapItem,NetWeight,NetWeightTotal,Plant"
+                requestAtLeastFields="MaterialDocument,MaterialDocumentYear,MaterialDocumentItem,Material,ProductDescription,QuantityInBaseUnit,MaterialBaseUnit,YY1_ScrapItem_MMI,ScrapeUnit,ScrapeDescription,NetWeight,WeightUnit,NetWeightTotal,StorageLocation,Plant,PostingDate,Batch,CostCenter"
+                ignoredFields="ID,MaterialDocumentYear,GoodsMovementType,StockType,StockTypeName,PostingDate,CreationDate,MaterialBaseUnit,MaterialDocument552"
+            >
+                <smartTable:customToolbar>
+                    <OverflowToolbar
+                        id="tbCustom"
+                        design="Transparent"
+                    >
+                        <ToolbarSpacer id="tbSpacer" />
+                        <Button
+                            id="btnCalculateScrap"
+                            icon="sap-icon://simulate"
+                            text="{i18n>calculateScrapWeight}"
+                            press=".onNavigateToCalculateScrap"
+                            type="Emphasized"
+                            enabled="false"
+                        />
+                    </OverflowToolbar>
+                </smartTable:customToolbar>
+            </smartTable:SmartTable>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,0 +1,198 @@
+{
+  "_version": "1.80.0",
+  "sap.app": {
+    "id": "matdoc551",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.23.0",
+      "toolsId": "46fffdd0-959b-48a2-8661-a2e5c3e77d1c"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/YY1_MAT_DOC_551_CDS/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "matdoc551_annotation"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
+      "matdoc551_annotation": {
+        "uri": "annotations/annotation.xml",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      },
+      "scrapeCalcService": {
+        "uri": "/sap/opu/odata/sap/Z_SCRAPE_CALC_BIND/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "materialDocService": {
+        "uri": "/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/materialDocService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
+      "inhouseRejectionService": {
+        "uri": "/sap/opu/odata/sap/YY1_INHOUSEREJECTION_CDS/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/inhouseRejectionService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "matdoc551-manage": {
+          "semanticObject": "matdoc551",
+          "action": "manage",
+          "title": "{{matdoc551-manage.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.142.12",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ui.layout": {},
+        "sap.ui.comp": {},
+        "sap.ui.unified": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "matdoc551.i18n.i18n",
+          "supportedLocales": [
+            ""
+          ],
+          "fallbackLocale": ""
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      },
+      "scrapeCalc": {
+        "dataSource": "scrapeCalcService",
+        "preload": false,
+        "settings": {}
+      },
+      "materialDocService": {
+        "dataSource": "materialDocService",
+        "preload": true,
+        "settings": {}
+      },
+      "inhouseRejectionService": {
+        "dataSource": "inhouseRejectionService",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "matdoc551.view",
+        "async": true,
+        "viewPath": "matdoc551.view"
+      },
+      "routes": [
+        {
+          "name": "Routematdoc551",
+          "pattern": ":?query:",
+          "target": [
+            "Targetmatdoc551"
+          ]
+        },
+        {
+          "name": "RouteCalculateScrap",
+          "pattern": "calculateScrap",
+          "target": [
+            "TargetCalculateScrap"
+          ]
+        }
+      ],
+      "targets": {
+        "Targetmatdoc551": {
+          "id": "matdoc551",
+          "name": "matdoc551"
+        },
+        "TargetCalculateScrap": {
+          "id": "calculateScrap",
+          "name": "calculateScrap"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "matdoc551.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "matdoc551"
+  }
+}

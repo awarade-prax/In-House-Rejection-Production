@@ -1,0 +1,54 @@
+.
+|-- README.md
+|-- eslint.config.mjs
+|-- mta.yaml
+|-- package-lock.json
+|-- package.json
+|-- structure.txt
+|-- tsconfig.json
+|-- ui5-deploy.yaml
+|-- ui5-local.yaml
+|-- ui5-mock.yaml
+|-- ui5.yaml
+|-- webapp
+|   |-- Component.ts
+|   |-- annotations
+|   |   `-- annotation.xml
+|   |-- controller
+|   |   |-- App.controller.ts
+|   |   |-- calculateScrap.controller.ts
+|   |   `-- matdoc551.controller.ts
+|   |-- css
+|   |   `-- style.css
+|   |-- i18n
+|   |   `-- i18n.properties
+|   |-- index.html
+|   |-- localService
+|   |   `-- mainService
+|   |       |-- data
+|   |       `-- metadata.xml
+|   |-- manifest.json
+|   |-- model
+|   |   `-- models.ts
+|   |-- test
+|   |   |-- integration
+|   |   |   |-- NavigationJourney.ts
+|   |   |   |-- opaTests.qunit.html
+|   |   |   |-- opaTests.qunit.ts
+|   |   |   `-- pages
+|   |   |-- testsuite.qunit.html
+|   |   |-- testsuite.qunit.ts
+|   |   `-- unit
+|   |       |-- controller
+|   |       |-- unitTests.qunit.html
+|   |       `-- unitTests.qunit.ts
+|   `-- view
+|       |-- App.view.xml
+|       |-- PlantValueHelp.fragment.xml
+|       |-- PostingDateValueHelp.fragment.xml
+|       |-- calculateScrap.view.xml
+|       `-- matdoc551.view.xml
+|-- xs-app.json
+`-- xs-security.json
+
+16 directories, 36 files

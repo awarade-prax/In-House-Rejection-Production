@@ -1,0 +1,53 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        id="plantVHDialog"
+        title="{i18n>plantVHTitle}"
+        contentWidth="400px"
+        contentHeight="500px"
+        resizable="true"
+        draggable="true"
+    >
+        <subHeader>
+            <Toolbar id="plantVHSearchToolbar">
+                <SearchField
+                    id="plantVHSearch"
+                    placeholder="{i18n>plantVHSearchPlaceholder}"
+                    search=".onPlantVHSearch"
+                    liveChange=".onPlantVHSearch"
+                    width="100%"
+                />
+            </Toolbar>
+        </subHeader>
+
+        <content>
+            <List
+                id="plantVHList"
+                mode="SingleSelectMaster"
+                items="{plantVHModel>/plants}"
+                selectionChange=".onPlantVHSelect"
+                noDataText="{i18n>plantVHNoData}"
+                growing="true"
+                growingThreshold="50"
+            >
+                <items>
+                    <StandardListItem
+                        id="plantVHListItem"
+                        title="{plantVHModel>Plant}"
+                        type="Active"
+                    />
+                </items>
+            </List>
+        </content>
+
+        <beginButton>
+            <Button
+                id="plantVHCloseBtn"
+                text="{i18n>cancel}"
+                press=".onPlantVHClose"
+            />
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "4.0"
+metadata:
+  name: matdoc551
+type: application
+framework:
+  name: SAPUI5
+  version: 1.142.12
+  libraries:
+    - name: sap.m
+    - name: sap.ui.core
+    - name: sap.ushell
+    - name: themelib_sap_fiori_3
+server:
+  customMiddleware:
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: ui5-tooling-transpile-middleware
+      afterMiddleware: compression
+      configuration:
+        debug: true
+        transformModulesToUI5:
+          overridesToOverride: true
+        excludePatterns:
+          - /Component-preload.js
+    - name: fiori-tools-preview
+      afterMiddleware: fiori-tools-appreload
+      configuration:
+        flp:
+          theme: sap_fiori_3_dark
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertErrors: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        backend:
+          - path: /sap
+            url: https://my433088-api.s4hana.cloud.sap
+            client: '100'
+            destination: STD_DEST_PROD_APP
+    - name: sap-fe-mockserver
+      beforeMiddleware: csp
+      configuration:
+        mountPath: /
+        services:
+          - urlPath: /sap/opu/odata/sap/YY1_MAT_DOC_551_CDS
+            metadataPath: ./webapp/localService/mainService/metadata.xml
+            mockdataPath: ./webapp/localService/mainService/data
+            generateMockData: true
+          - urlPath: /sap/opu/odata/sap/Z_SCRAPE_CALC_BIND
+            metadataPath: ./webapp/localService/scrapeCalcService/metadata.xml
+            mockdataPath: ./webapp/localService/scrapeCalcService/data
+            generateMockData: true
+          - urlPath: /sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV
+            metadataPath: ./webapp/localService/materialDocService/metadata.xml
+            mockdataPath: ./webapp/localService/materialDocService/data
+            generateMockData: true
+          - urlPath: /sap/opu/odata/sap/YY1_INHOUSEREJECTION_CDS
+            metadataPath: ./webapp/localService/inhouseRejectionService/metadata.xml
+            mockdataPath: ./webapp/localService/inhouseRejectionService/data
+            generateMockData: true
+        annotations: []
+builder:
+  customTasks:
+    - name: ui5-tooling-transpile-task
+      afterTask: replaceVersion
+      configuration:
+        debug: true
+        transformModulesToUI5:
+          overridesToOverride: true

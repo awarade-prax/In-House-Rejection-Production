@@ -1,0 +1,174 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    controllerName="matdoc551.controller.calculateScrap"
+>
+    <Page
+        id="calculateScrapPage"
+        title="{i18n>calculateScrapTitle}"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+    >
+        <content>
+            <BusyIndicator
+                id="busyIndicator"
+                visible="{pageModel>/busy}"
+                size="3rem"
+                class="sapUiLargeMarginBeginEnd sapUiMediumMarginTopBottom"
+            />
+
+            <MessageStrip
+                id="infoStrip"
+                text="{pageModel>/message}"
+                type="{pageModel>/messageType}"
+                showIcon="true"
+                visible="{pageModel>/messageVisible}"
+                class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom"
+            />
+
+            <Panel
+                id="migoOverviewPanel"
+                expandable="true"
+                expanded="true"
+                visible="{pageModel>/migoOverviewVisible}"
+                class="sapUiResponsiveMargin"
+                width="auto"
+            >
+                <headerToolbar>
+                    <OverflowToolbar id="migoOverviewToolbar">
+                        <Title id="migoOverviewTitle" text="552 MIGO Document Overview" level="H3" />
+                        <ToolbarSpacer id="migoOverviewSpacer" />
+                        <ObjectStatus
+                            id="migoDocumentStatus"
+                            title="Material Document"
+                            text="{pageModel>/migoOverview/MaterialDocument} {pageModel>/migoOverview/FiscalYear}"
+                            state="{pageModel>/bottomState}"
+                        />
+                        <ObjectStatus
+                            id="cboPostStatus"
+                            title="CBO"
+                            text="{pageModel>/cboStatusText}"
+                            icon="{pageModel>/cboStatusIcon}"
+                            state="{pageModel>/cboStatusState}"
+                        />
+                        <Button
+                            id="btnPost552"
+                            text="Post 552"
+                            icon="sap-icon://post"
+                            type="Emphasized"
+                            enabled="{pageModel>/post552Enabled}"
+                            press=".onPost552"
+                        />
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <VBox id="migoOverviewContent" width="100%">
+                    <HBox
+                        id="postingDateBox"
+                        alignItems="Center"
+                        class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom"
+                    >
+                        <Label
+                            id="postingDateLabel"
+                            text="Posting Date"
+                            labelFor="postingDatePicker"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <DatePicker
+                            id="postingDatePicker"
+                            value="{pageModel>/migoOverview/PostingDate}"
+                            valueFormat="yyyy-MM-dd"
+                            displayFormat="yyyy-MM-dd"
+                            placeholder="Select Posting Date"
+                            width="12rem"
+                        />
+                    </HBox>
+
+                    <Table
+                        id="migoItemOverviewTable"
+                        items="{pageModel>/migoOverview/items}"
+                        sticky="ColumnHeaders"
+                        width="auto"
+                        class="sapUiSmallMarginTop"
+                    >
+                        <headerToolbar>
+                            <OverflowToolbar id="migoItemToolbar">
+                                <Title
+                                    id="migoItemTitle"
+                                    text="Line Item Overview ({= ${pageModel>/migoOverview/items}.length })"
+                                    level="H4"
+                                />
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column id="migoColLine" width="6%"><Text id="migoHdrLine" text="Line" /></Column>
+                            <Column id="migoColMaterial" width="14%"><Text id="migoHdrMaterial" text="Material" /></Column>
+                            <Column id="migoColMvmt" width="9%"><Text id="migoHdrMvmt" text="Movement Type" /></Column>
+                            <Column id="migoColPlant" width="8%"><Text id="migoHdrPlant" text="Plant" /></Column>
+                            <Column id="migoColSLoc" width="12%"><Text id="migoHdrSLoc" text="Storage Location" /></Column>
+                            <Column id="migoColBatch" width="12%"><Text id="migoHdrBatch" text="Batch" /></Column>
+                            <Column id="migoColCostCenter" width="12%"><Text id="migoHdrCostCenter" text="Cost Center" /></Column>
+                            <Column id="migoColQty" width="13%" hAlign="End"><Text id="migoHdrQty" text="Qty in Unit Entry" /></Column>
+                            <Column id="migoColCalculatedQty" width="14%" hAlign="End"><Text id="migoHdrCalculatedQty" text="Calculated Qty" /></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem id="migoItemOverviewRow">
+                                <cells>
+                                    <ObjectNumber id="migoCellLine" number="{pageModel>MaterialDocumentLine}" />
+                                    <ObjectIdentifier id="migoCellMaterial" title="{pageModel>Material}" />
+                                    <Text id="migoCellMvmt" text="{pageModel>GoodsMovementType}" />
+                                    <Text id="migoCellPlant" text="{pageModel>Plant}" />
+                                    <Input
+                                        id="migoCellSLoc"
+                                        value="{pageModel>StorageLocation}"
+                                        placeholder="Enter Storage Location"
+                                        width="100%"
+                                    />
+                                    <Input
+                                        id="migoCellBatch"
+                                        value="{pageModel>Batch}"
+                                        placeholder="{i18n>batchPlaceholder}"
+                                        width="100%"
+                                    />
+                                    <Input
+                                        id="migoCellCostCenter"
+                                        value="{pageModel>CostCenter}"
+                                        placeholder="{i18n>costCenterPlaceholder}"
+                                        width="100%"
+                                    />
+                                    <ObjectNumber
+                                        id="migoCellQty"
+                                        number="{pageModel>QuantityInEntryUnit}"
+                                        unit="{pageModel>EntryUnit}"
+                                    />
+                                    <Input
+                                        id="migoCellCalculatedQty"
+                                        value="{pageModel>CalculatedQty}"
+                                        type="Number"
+                                        textAlign="End"
+                                        description="{pageModel>EntryUnit}"
+                                        placeholder="Enter Calculated Qty"
+                                        width="180%"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </VBox>
+            </Panel>
+        </content>
+
+        <footer>
+            <OverflowToolbar id="migoBottomBar">
+                <ObjectStatus
+                    id="migoBottomStatus"
+                    icon="{pageModel>/bottomIcon}"
+                    text="{pageModel>/bottomMessage}"
+                    state="{pageModel>/bottomState}"
+                    visible="{pageModel>/bottomVisible}"
+                />
+                <ToolbarSpacer id="migoBottomSpacer" />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

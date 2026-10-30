@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 UI.SelectionFields
+                 Declares which fields appear directly in the SmartFilterBar
+                 basic area when the app loads — in left-to-right order.
+                 Without this annotation SmartFilterBar shows NO fields in
+                 the bar; everything ends up hidden behind the Filters dialog.
+            ════════════════════════════════════════════════════════════════ -->
+            <Annotations Target="YY1_MAT_DOC_551_CDS.YY1_MAT_DOC_551Type">
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Plant</PropertyPath>
+                        <PropertyPath>MaterialDocument</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 VALUE HELP: Plant
+            ════════════════════════════════════════════════════════════════ -->
+            <Annotations Target="YY1_MAT_DOC_551_CDS.YY1_MAT_DOC_551Type/Plant">
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="CollectionPath" String="YY1_MAT_DOC_551"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Plant"/>
+                                    <PropertyValue Property="ValueListProperty" String="Plant"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="StorageLocation"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues" Bool="false"/>
+            </Annotations>
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 VALUE HELP: MaterialDocument  (filtered by selected Plant)
+            ════════════════════════════════════════════════════════════════ -->
+            <Annotations Target="YY1_MAT_DOC_551_CDS.YY1_MAT_DOC_551Type/MaterialDocument">
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="CollectionPath" String="YY1_MAT_DOC_551"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <!-- IN: current Plant value pre-filters the standard value-help results -->
+                                <Record Type="Common.ValueListParameterIn">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Plant"/>
+                                    <PropertyValue Property="ValueListProperty" String="Plant"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="MaterialDocument"/>
+                                    <PropertyValue Property="ValueListProperty" String="MaterialDocument"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues" Bool="false"/>
+            </Annotations>
+
+
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
